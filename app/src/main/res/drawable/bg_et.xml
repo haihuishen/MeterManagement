@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--属性介绍：-->
+    <!--android:state_selected 选中-->
+    <!--android:state_focused  获得焦点-->
+    <!--android:state_pressed  点击-->
+    <!--android:state_enabled  设置是否响应事件,指所有事件-->
+
+    <!--获得焦点-->
+    <!--默认：false没有获得-->
+    <item android:state_focused="false">
+
+        <shape>
+            <!-- 这里是背景的颜色 -->
+            <solid android:color="@color/white" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+
+    <!--true:获取了焦点-->
+    <item android:state_focused="true">
+
+        <shape>
+            <!-- 这里是背景的颜色 -->
+            <solid android:color="@color/white" />
+            <corners android:radius="2dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/blue" />
+        </shape>
+    </item>
+</selector>

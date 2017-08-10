@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_assetNumbers"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="30dp"
+        android:text="123"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        />
+
+    <Button
+        android:id="@+id/btn_del"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:text="删除"
+        android:background="@drawable/btn_bg_blue"
+        android:textColor="@drawable/btn_text_color_blue_w"
+        android:textSize="15dp"/>
+
+</LinearLayout>

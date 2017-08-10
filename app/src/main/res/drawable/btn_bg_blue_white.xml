@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--  <solid android:color="#EEEEEE" /> 这里是背景的颜色-->
+
+
+    <!-- 这里是边框的颜色和宽度 -->
+    <!--<stroke android:width="2dp" android:color="#30ef4c" />-->
+
+    <item android:state_pressed="false">
+
+        <shape>
+            <solid android:color="@color/shen_btn_blue" />
+            <corners android:radius="3dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/border" />
+        </shape>
+    </item>
+
+    <!--按下-->
+    <item android:state_pressed="true">
+
+        <shape>
+            <solid android:color="@color/white" />
+            <corners android:radius="3dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/border" />
+        </shape>
+    </item>
+
+</selector>

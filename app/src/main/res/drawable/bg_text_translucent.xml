@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical" >
+    <!--  <solid android:color="#EEEEEE" /> 这里是背景的颜色-->
+
+    <solid android:color="#70ffffff" />
+    <!-- 这里是边框的颜色和宽度 -->
+    <!--<stroke android:width="2dp" android:color="#30ef4c" />-->
+    <stroke android:width="2dp" android:color="#80000000" />
+    <corners android:radius="5dp" />
+
+</shape>

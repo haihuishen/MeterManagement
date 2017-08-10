@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:minHeight="32dp">
+
+
+    <RelativeLayout
+        android:id="@+id/layout_titlelayout_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/shen_btn_blue"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_back_left"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/back_select_state"
+                android:scaleType="fitCenter" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/top_leftTv"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="32dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:text="在线\n查询"-->
+                <!--android:textSize="12sp"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@android:color/white" />-->
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:padding="10dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_menu_right"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/menu_select_state"
+                android:scaleType="centerInside"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>

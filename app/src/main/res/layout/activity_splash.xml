@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/login_bg3"
+    tools:context="activity.SplashActivity">
+
+    <!-- android:background="@drawable/splash_bg_newyear"   设置背景图片 -->
+
+    <!--在清单文件中 设置了——没"标题"和"状态栏（电量、时间）"的主题
+        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" -->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:id="@+id/tv_count_down"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="1"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:background="@drawable/bg_tv_count_dowm"/>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="130dp"
+                android:background="@mipmap/nwlogo"
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="南方电网河公司池供电局"
+                android:textSize="20dp"
+                android:textColor="@color/shen_blue"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="集抄改造管理平台"
+                android:textSize="20dp"
+                android:textColor="@color/shen_blue"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5.0dip"
+            android:gravity="center"
+            android:text="@string/ZhTech"
+            android:textSize="12dp"
+            android:textColor="@color/shen_blue"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:text="@string/copyright"
+            android:textSize="12dp"
+            android:textColor="@color/shen_blue"/>
+
+    </LinearLayout>
+
+</LinearLayout>

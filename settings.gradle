@@ -1,0 +1,3 @@
+include ':app', ':sweetdialog', ':PhotoView'
+project(':sweetdialog').projectDir = new File('libraries/sweetdialog')
+project(':PhotoView').projectDir = new File('libraries/PhotoView')
