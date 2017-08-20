@@ -101,7 +101,7 @@ public class SendEmailActivity extends BaseActivity implements View.OnClickListe
         mAcTvSubject.initData(AutoCompleteTextViewWithData1.DATA_Name_SUBJECT);
         mAcTvText.initData(AutoCompleteTextViewWithData1.DATA_Name_TEXT);
 
-        mAcTvRecipients.setText("987775154@qq.com");
+        //mAcTvRecipients.setText("987775154@qq.com");
 
         AreaBean bean = MyApplication.getAreaBean();
         String s = bean.getPowerSupplyBureau()
