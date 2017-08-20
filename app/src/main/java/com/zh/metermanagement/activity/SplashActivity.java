@@ -87,7 +87,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
         Log.i("shen", "getDeviceNum():"+sam);
 
         sam = sam.toLowerCase();
-        if (!sam.contains("kt45") || !sam.contains("c70sc")) {
+        if (!sam.contains("kt45")) {
 
             //if (!sam.contains("C70SC")) {
             Toast.makeText(this, "设备初始化失败！", Toast.LENGTH_SHORT).show();
