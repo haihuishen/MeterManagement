@@ -77,7 +77,7 @@ public class TaskPresenterImpl implements TaskPresenter {
                             throws Exception {
 
                         DataManagement.deleteTable(mContext, Constant.DB_NAME, Constant.TABLE_METERINFO);
-                        DataManagement.deleteTable(mContext, Constant.DB_NAME, Constant.TABLE_ASSETNUMBERS);
+                        DataManagement.deleteTable(mContext, Constant.DB_NAME, Constant.TABLE_ASSETNUMBER);
 
                         List<MeterBean> beanList = ExcelUtil.readExcel(Constant.excelPathDir + Constant.importExcel);
                         Log.i("shen", "beanList.size():"+beanList.size());
@@ -251,7 +251,7 @@ public class TaskPresenterImpl implements TaskPresenter {
                     @Override
                     public List<AssetNumberBean> apply(@io.reactivex.annotations.NonNull String s) throws Exception {
 
-                        Cursor cursor = mTableEx.Query(Constant.TABLE_ASSETNUMBERS,
+                        Cursor cursor = mTableEx.Query(Constant.TABLE_ASSETNUMBER,
                                 null,
                                 null,
                                 null,
@@ -267,7 +267,7 @@ public class TaskPresenterImpl implements TaskPresenter {
 
 
                                         assetNumberBean.setAssetNumbers(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_ASSETNUMBERS_STR_assetNumbers)));
+                                                cursor.getColumnIndex(Constant.TABLE_ASSETNUMBER_STR_assetNumbers)));
 
                                     }catch (Exception e){
                                         LogUtils.i("e.getMessage():" + e.getMessage());
@@ -289,6 +289,8 @@ public class TaskPresenterImpl implements TaskPresenter {
                 .subscribe(observer);
     }
 
+
+
     @Override
     public void addMismatchingAssetNumbers(Observer observer, final ContentValues values) {
         Observable.just("")
@@ -297,7 +299,7 @@ public class TaskPresenterImpl implements TaskPresenter {
                     @Override
                     public Long apply(@io.reactivex.annotations.NonNull String s) throws Exception {
 
-                        Long i = mTableEx.Add(Constant.TABLE_ASSETNUMBERS, values);
+                        Long i = mTableEx.Add(Constant.TABLE_ASSETNUMBER, values);
 
                         return i;
                     }
@@ -322,4 +324,7 @@ public class TaskPresenterImpl implements TaskPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+
+
+
 }

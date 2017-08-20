@@ -1,5 +1,7 @@
 package com.zh.metermanagement.utils;
 
+import android.text.StaticLayout;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.Date;
  */
 
 public class TimeUtils {
+
+    public static String yyyy_MM_ddHHmmss = "yyyy-MM-dd HH:mm:ss";
 
     public static String getCurrentTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
@@ -36,6 +40,16 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date());
     }
 
+    /**
+     * 将 Date 转化为字符串
+     * @param date
+     * @param dateFormat
+     * @return
+     */
+    public static String dateConvertString(Date date, String dateFormat) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+        return simpleDateFormat.format(date);
+    }
 
     public static boolean compareTime(String time1, String time2, String dateFormat){
         SimpleDateFormat df = new SimpleDateFormat(dateFormat);//创建日期转换对象HH:mm:ss为时分秒，年月日为yyyy-MM-dd

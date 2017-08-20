@@ -924,7 +924,7 @@ public class ReplaceMeterActivity extends BaseActivity implements View.OnClickLi
         contentValues.put("newElectricity", mMeterBean.getNewElectricity());
 
         contentValues.put("time", mMeterBean.getTime());
-        contentValues.put("picPath", mMeterBean.getPicPath());
+        contentValues.put("mPicPaths", mMeterBean.getPicPath());
         contentValues.put("isFinish", mMeterBean.isFinish());
 
 

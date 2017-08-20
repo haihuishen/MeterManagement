@@ -71,9 +71,9 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
         for(int i=1; i<10; i++){
             pathList.add(Constant.DIRECTIONSFORUSEIMAGE_PATH + i +".png");
         }
-        PicAdapter picAdapter = new PicAdapter(this, pathList);
-
-        mLvDirectionsForUse.setAdapter(picAdapter);
+//        PicAdapter picAdapter = new PicAdapter(this, pathList);
+//
+//        mLvDirectionsForUse.setAdapter(picAdapter);
     }
 
     @Override

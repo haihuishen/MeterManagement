@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/libraries/PasswordDialog" />
             <option value="$PROJECT_DIR$/libraries/PhotoView" />
             <option value="$PROJECT_DIR$/libraries/sweetdialog" />
           </set>

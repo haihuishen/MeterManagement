@@ -9,7 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textView3"
@@ -114,7 +115,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:text="旧表资产编号:"/>
+            android:text="旧资产编号:"/>
 
         <TextView
             android:id="@+id/tv_oldAssetNumbers"
@@ -185,7 +186,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:text="新表资产编号:"/>
+            android:text="新资产编号:"/>
 
         <TextView
             android:id="@+id/tv_newAssetNumbersScan"
@@ -246,7 +247,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -258,18 +258,89 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:text="现场图片:"/>
+            android:text="采集器:"/>
+
+        <TextView
+            android:id="@+id/tv_newCollector"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:text=""/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:text="电表\n现场图片:"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.bm.library.PhotoView
-                android:id="@+id/pv_item_image"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="4dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:scrollbars="none"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lLayout_newCollector"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:text="采集器\n现场图片:"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_pic_newCollector"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:scrollbars="none"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
 

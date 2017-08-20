@@ -10,9 +10,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 往SDCard读入数据权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 桌面创建快捷图标 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".application.MyApplication"
@@ -38,22 +43,34 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".activity.StatisticsActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".activity.StatisticsDetailsActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
-        </activity>
-
         <activity android:name=".activity.SelectorActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SelectorActivity1"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SelectorActivity2"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.SortLoadDataActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.SortActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".activity.LoadDataActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.LoadDataActivity1"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
@@ -63,8 +80,16 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.ReplaceMeterActivity1"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity android:name=".activity.NewCollectorActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.NewCollectorActivity1"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
@@ -75,6 +100,31 @@
         </activity>
 
         <activity android:name=".activity.GenerateReportsActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.GenerateReportsActivity1"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity android:name=".activity.StatisticsActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.StatisticsDetailsActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".activity.SendEmailActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>

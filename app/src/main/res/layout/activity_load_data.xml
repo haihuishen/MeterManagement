@@ -17,16 +17,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="加载数据前请确认：\n
-1、数据源文件存放位置为:\n       我的电脑\\kt45\\手机存储\\电表换装\n
-2、数据源文件名为import.xls\n
-3、数据源文件的数据格式符合要求"
+1、数据源文件存放位置为:\n       我的电脑\\kt45\\手机存储\\电表换装\\导入数据源\n
+2、数据源文件的数据格式符合要求\n
+3、后缀名若不是.xls, 请将文件另存为.xls"
         android:textColor="@color/black"/>
     <Button
         android:layout_marginTop="60dp"
         android:id="@+id/btn_loadDate"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="加载数据"
+        android:text="导入数据"
         android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="20dp"

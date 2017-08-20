@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/llayout_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:text="查询条件(可输入一个或多个):"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+
+                <com.zh.metermanagement.view.ClearEditText
+                    android:id="@+id/et_userName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bg_et_g"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:hint="用户名称"
+                    android:textSize="15dp"/>
+
+                <com.zh.metermanagement.view.ClearEditText
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/et_userNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bg_et_g"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:hint="用户编码--可以只填写后几位"
+                    android:textSize="15dp"/>
+
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.zh.metermanagement.view.ClearEditText
+                        android:id="@+id/et_oldAssetsNumber"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/bg_et_g"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:hint="旧资产编号"
+                        android:textSize="15dp"/>
+                    <Button
+                        android:id="@+id/btn_oldAssetsNumber"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.zh.metermanagement.view.ClearEditText
+                        android:id="@+id/et_newAssetsNumber"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/bg_et_g"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:hint="新资产编号"
+                        android:textSize="15dp"/>
+                    <Button
+                        android:id="@+id/btn_newAssetsNumber"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+
+
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_bg_blue_white"
+                    android:text="查    询"
+                    android:textSize="20dp" />
+
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <!--<ImageButton-->
+            <!--android:id="@+id/ib_upAndDown"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:background="@mipmap/dowm"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginRight="10dp"/>-->
+
+            <ToggleButton
+                android:id="@+id/tb_upAndDown"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/dowm"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:textOn=""
+                android:textOff=""/>
+        </RelativeLayout>
+
+        <!--android:divider="#00000000"   去掉线-->
+        <!--android:dividerHeight="10dp"-->
+        <ListView
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:id="@+id/lv_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#00000000"
+            android:dividerHeight="2dp">
+        </ListView>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e0000000" />
+
+        <com.bm.library.PhotoView
+            android:id="@+id/pv_bg"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+</RelativeLayout>

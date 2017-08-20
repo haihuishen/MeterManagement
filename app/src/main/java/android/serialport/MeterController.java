@@ -120,7 +120,7 @@ public class MeterController {
 		this.mContext = mContext;
 
 
-		Log.i("shen", "isOpen:" + isOpen);
+		//Log.i("shen", "isOpen:" + isOpen);
 		if(isOpen){
 			Meter_Close();
 			try {

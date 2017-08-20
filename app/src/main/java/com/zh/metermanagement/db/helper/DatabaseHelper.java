@@ -50,9 +50,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		System.out.println("DBHelper onCreate");
 
 		/** 资产编号无匹配的(资产编号) */
-		db.execSQL("create table if not exists assetnumbers(" +
+		db.execSQL("create table if not exists assetnumber(" +
 				"_id integer primary key autoincrement," +
 				"assetNumbers varchar(50) not null unique )");									// 是否完成(扫描完)
+
+
+
+		/** 采集器(资产编号) */
+		db.execSQL("create table if not exists collectornumber(" +
+				"_id integer primary key autoincrement," +
+				"collectorNumbers varchar(50) not null unique," +			// 采集器资产编码
+				"theMeteringSection varchar(50)," +							// 抄表区段
+				"collectorPicPath varchar(1000))");							// 采集器图片
 
 
 		/** 用户数据(表) */
@@ -77,6 +86,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"picPath varchar(500)," +									// 拍照图片的路径
 				"isFinish tinyint(1))");									// 是否完成(扫描完)
 
+		/** 用户数据1(表) */
+		db.execSQL("create table if not exists meterinfo1(" +
+				"_id integer primary key autoincrement," +
+				"userNumber varchar(50)," +									// 用户编号
+				"userName varchar(50)," +									// 用户名称
+				"userAddr varchar(50)," +									// 用户地址
+				"userPhone varchar(50)," +									// 用户电话
+				"measurementPointNumber varchar(50)," +						// 计量点编号
+				"powerSupplyBureau varchar(50)," +							// 供电局(供电单位)
+				"theMeteringSection varchar(50)," +							// 抄表区段
+				"courts varchar(50)," +										// 台区
+				"measuringPointAddress varchar(50)," +						// 计量点地址
+				"oldAssetNumbers varchar(50) not null," +					// 旧表资产编号(导入的)
+				"oldAddr varchar(50)," +									// 旧表表地址(需扫描)
+				"oldAddrAndAsset tinyint(1)," +								// 旧表表地址 和 资产编码 比较
+				"oldElectricity varchar(50)," +								// 旧电能表止码-电量(需扫描)
+				"newAddr varchar(50)," +									// 新表表地址(需扫描)
+				"newAddrAndAsset tinyint(1)," +								// 新表表地址 和 资产编码 比较
+				"newAssetNumbersScan varchar(50)," +						// 新表资产编号(需扫描)
+				"newElectricity varchar(50)," +								// 新电能表止码-电量(需扫描)
+				"collectorAssetNumbersScan varchar(50)," +					// 采集器资产编号(需扫描)
+				"time date," +												// 完成换抄时间
+				"picPath varchar(1000)," +									// 拍照图片的路径(换表)
+				"meterPicPath varchar(500)," +								// 拍照图片的路径 (新装采集器对应的电表)
+				"meterContentPicPath varchar(500)," +						// 拍照图片的路径	(新装采集器)
+				"relaceOrAnd tinyint(1)," +									// 0:"换表"； 1："新装采集器"  -- 要先判断是否抄完
+				"isFinish tinyint(1))");									// 是否完成(扫描完)
     }
 
 

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MeterManagement.iml" filepath="$PROJECT_DIR$/MeterManagement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/PasswordDialog/PasswordDialog.iml" filepath="$PROJECT_DIR$/libraries/PasswordDialog/PasswordDialog.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/PhotoView/PhotoView.iml" filepath="$PROJECT_DIR$/libraries/PhotoView/PhotoView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/sweetdialog/sweetdialog.iml" filepath="$PROJECT_DIR$/libraries/sweetdialog/sweetdialog.iml" />

@@ -1,16 +1,21 @@
 package com.zh.metermanagement.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.StatFs;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,16 +24,16 @@ import com.shen.sweetdialog.SweetAlertDialog;
 import com.zh.metermanagement.R;
 import com.zh.metermanagement.application.MyApplication;
 import com.zh.metermanagement.config.Constant;
-import com.zh.metermanagement.trasks.TaskPresenterImpl;
+import com.zh.metermanagement.utils.CopyFileUtils;
 import com.zh.metermanagement.utils.FilesUtils;
+import com.zh.metermanagement.utils.LogUtils;
+import com.zh.metermanagement.utils.ResourceUtil;
+import com.zh.metermanagement.utils.ShortCut;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 闪屏<p>
@@ -55,6 +60,8 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
     MyCountDownTimer myCountDownTimer;  // 倒计时器
 
+    private final int REQUESTCODE = 101;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +72,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
             @Override
             public void run(){
 
-                Intent intent = new Intent(SplashActivity.this, SelectorActivity.class);        // 跳转到主页面
+                Intent intent = new Intent(SplashActivity.this, SelectorActivity1.class);        // 跳转到主页面
                 startActivity(intent);
                 finish();
             }
@@ -80,24 +87,38 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
         Log.i("shen", "getDeviceNum():"+sam);
 
         sam = sam.toLowerCase();
-        if (!sam.contains("kt45")) {
+        if (!sam.contains("kt45") || !sam.contains("c70sc")) {
+
+            //if (!sam.contains("C70SC")) {
             Toast.makeText(this, "设备初始化失败！", Toast.LENGTH_SHORT).show();
 
             //如果之前创建了Runnable对象,那么就把这任务移除
             if(runnable!=null){
                 handler.removeCallbacks(runnable);
             }
-            finish();
+            //finish();
+            MyApplication.exitApp();
 
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int checkSelfPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (checkSelfPermission == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUESTCODE);
+            }
+        }else {
 
-        FilesUtils.createFile(this, Constant.excelPathDir);
-        FilesUtils.createFile(this, Constant.CACHE_IMAGE_PATH);
-        FilesUtils.createFile(this, Constant.IMAGE_PATH);
-        FilesUtils.createFile(this, Constant.DIRECTIONSFORUSEIMAGE_PATH);
+            FilesUtils.createFile(this, Constant.srcPathDir);
+            FilesUtils.createFile(this, Constant.excelPathDir);
+            FilesUtils.createFile(this, Constant.IMPORT_METER_INFO_PATH);
+            FilesUtils.createFile(this, Constant.IMPORT_PHONE_PATH);
+            FilesUtils.createFile(this, Constant.CACHE_IMAGE_PATH);
+            FilesUtils.createFile(this, Constant.IMAGE_PATH);
+            FilesUtils.createFile(this, Constant.DIRECTIONSFORUSEIMAGE_PATH);
+            FilesUtils.createFile(this, Constant.NoWorkOrder_PATH);
 
-        initSrc(Constant.CACHE_IMAGE_PATH,"no_preview_picture.png");
-        //initSrc(Constant.CACHE_IMAGE_PATH,"CacheImage.jpg");
+            initSrc(Constant.CACHE_IMAGE_PATH,"no_preview_picture.png");
+            //initSrc(Constant.CACHE_IMAGE_PATH,"CacheImage.jpg");
+        }
 
         if(!checkExcel()){
             //如果之前创建了Runnable对象,那么就把这任务移除
@@ -107,12 +128,13 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
             SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
                     .setTitleText("提示")
-                    .setContentText("import.xls文件不存在")
+                    .setContentText("\'电表换装/导入数据源/换表导入文件/\'\n 无导入文件")
                     .setConfirmText("确认")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            finish();
+                            //finish();
+                            MyApplication.exitApp();
                             sweetAlertDialog.dismiss();
                         }
                     });
@@ -122,6 +144,36 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
             dialog.show();
 
         }
+
+        CopyFileUtils.copyFile(this.getDatabasePath(Constant.DB_NAME).getAbsolutePath(), Constant.IMAGE_PATH+Constant.DB_NAME);
+        FilesUtils.broadCreateFile(this, new File(Constant.IMAGE_PATH+Constant.DB_NAME));
+
+
+        // 在桌面生成图标
+        ShortCut.createShortCut(this, ResourceUtil.getMipmapResIDByName(this, "app_icon"),
+                ResourceUtil.getStringResIDByName(this, "app_name"));
+
+
+//        //内存地址
+//        public static String root = Environment.getExternalStorageDirectory().getPath();
+//        /** 获取SD可用容量 */
+//    private static long getAvailableStorage() {
+//
+//        StatFs statFs = new StatFs(root);
+//        long blockSize = statFs.getBlockSize();
+//        long availableBlocks = statFs.getAvailableBlocks();
+//        long availableSize = blockSize * availableBlocks;
+//        // Formatter.formatFileSize(context, availableSize);
+//        return availableSize;
+//    }
+//        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+//                && getAvailableStorage()>1000000) {
+//
+//            // Toast.makeText(context, "SD卡不可用", Toast.LENGTH_LONG).show();
+//
+//            Log.i("shen","SD卡不可用");
+//            return "请清理空间";
+//        }
 
         initView();
         initListener();
@@ -141,7 +193,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
         mTvCountDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashActivity.this, SelectorActivity.class);        // 跳转到主页面
+                Intent intent = new Intent(SplashActivity.this, SelectorActivity1.class);        // 跳转到主页面
                 startActivity(intent);
                 finish();
                 //如果之前创建了Runnable对象,那么就把这任务移除
@@ -191,7 +243,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
             mTvCountDown.setText("正在跳转");
         }
         public void onTick(long millisUntilFinished) {
-           // mTvCountDown.setText("倒计时(" + millisUntilFinished / 1000 + ")");
+            // mTvCountDown.setText("倒计时(" + millisUntilFinished / 1000 + ")");
             mTvCountDown.setTextSize(25);
             mTvCountDown.setText(millisUntilFinished / 1000 +"");
         }
@@ -225,15 +277,25 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
      * @return
      */
     public boolean fileIsExists() {
+
+        boolean isExists = false;
         try {
-            File f = new File(Constant.excelPathDir + Constant.importExcel);
-            if (!f.exists()) {
-                return false;
+            File directory = new File(Constant.IMPORT_METER_INFO_PATH);
+
+            if(directory.exists()){
+                File[] files = directory.listFiles();
+                if(files.length == 0){
+
+                }else {
+                    isExists = true;
+                }
             }
+
         } catch (Exception e) {
-            return false;
+            LogUtils.i("e" + e.getMessage());
         }
-        return true;
+
+        return isExists;
     }
 
 
@@ -293,6 +355,29 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUESTCODE) {
+            if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE) && grantResults[0]
+                    == PackageManager.PERMISSION_GRANTED) {
+                //用户同意
+                FilesUtils.createFile(this, Constant.srcPathDir);
+                FilesUtils.createFile(this, Constant.excelPathDir);
+                FilesUtils.createFile(this, Constant.IMPORT_METER_INFO_PATH);
+                FilesUtils.createFile(this, Constant.IMPORT_PHONE_PATH);
+                FilesUtils.createFile(this, Constant.CACHE_IMAGE_PATH);
+                FilesUtils.createFile(this, Constant.IMAGE_PATH);
+                FilesUtils.createFile(this, Constant.DIRECTIONSFORUSEIMAGE_PATH);
+
+                initSrc(Constant.CACHE_IMAGE_PATH,"no_preview_picture.png");
+            } else {
+                //用户不同意
+
             }
         }
     }

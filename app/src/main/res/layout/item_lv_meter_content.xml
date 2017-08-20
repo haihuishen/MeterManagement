@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_assetNumbers"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="25dp"
+        android:text="123"
+        android:textSize="13dp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        />
+
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="5dp">
+        <ImageButton
+            android:id="@+id/ib_camera_item"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/camera"
+            android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rlayout_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <com.bm.library.PhotoView
+                android:id="@+id/pv_pic_item"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter" />
+
+            <ImageView
+                android:id="@+id/iv_pic_item_delete"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/reddelete" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_del"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:text="删除"
+        android:background="@drawable/btn_bg_blue"
+        android:textColor="@drawable/btn_text_color_blue_w"
+        android:textSize="13dp"/>
+
+</LinearLayout>

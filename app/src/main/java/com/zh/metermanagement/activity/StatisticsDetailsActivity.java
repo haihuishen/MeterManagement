@@ -1,7 +1,7 @@
 package com.zh.metermanagement.activity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -15,13 +15,16 @@ import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.zh.metermanagement.R;
 import com.zh.metermanagement.activity.base.BaseActivity;
+import com.zh.metermanagement.adapter.AssetsNumberMismatchesAdapter;
 import com.zh.metermanagement.adapter.FinishedAdapter;
 import com.zh.metermanagement.adapter.UnFinishedAdapter;
-import com.zh.metermanagement.adapter.AssetsNumberMismatchesAdapter;
 import com.zh.metermanagement.application.MyApplication;
 import com.zh.metermanagement.bean.AssetNumberBean;
-import com.zh.metermanagement.bean.MeterBean;
+import com.zh.metermanagement.bean.CollectorNumberBean;
+import com.zh.metermanagement.bean.MeterBean1;
 import com.zh.metermanagement.config.Constant;
+import com.zh.metermanagement.utils.ImageFactory;
+import com.zh.metermanagement.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +51,9 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
 
 
     /******************************全屏图片***********************************/
-    View mParent;
-    View mBg;
-    PhotoView mPhotoView;
+    View mLlayoutParent;
+    View mIvBg;
+    PhotoView mPvBg;
     Info mInfo;
 
     AlphaAnimation in = new AlphaAnimation(0, 1);
@@ -64,6 +67,11 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
     ListView mListView;
     ListView mAssetsNumberListView;
 
+    private Bitmap mBitmap;
+
+    ArrayList<CollectorNumberBean> mCollectorNumberBeanList = new ArrayList<CollectorNumberBean>();
+
+    FinishedAdapter mFinishedAdapter;
     @Override
     public int getContentLayout() {
         return R.layout.activity_statistics_details;
@@ -94,9 +102,9 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
         mListView = (ListView) findViewById(R.id.lv_info);
         mAssetsNumberListView = (ListView) findViewById(R.id.lv_assetsNumber_Mismatches);
 
-        mParent = findViewById(R.id.parent);
-        mBg = findViewById(R.id.bg);
-        mPhotoView = (PhotoView) findViewById(R.id.img);
+        mLlayoutParent = findViewById(R.id.parent);
+        mIvBg = findViewById(R.id.bg);
+        mPvBg = (PhotoView) findViewById(R.id.img);
 
     }
 
@@ -113,7 +121,7 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mBg.setVisibility(INVISIBLE);
+                mIvBg.setVisibility(INVISIBLE);
             }
 
             @Override
@@ -121,16 +129,16 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
             }
         });
 
-        mPhotoView.enable();
-        mPhotoView.setOnClickListener(new View.OnClickListener() {
+        mPvBg.enable();
+        mPvBg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBg.startAnimation(out);
+                mIvBg.startAnimation(out);
                 setTitleIsShow(View.VISIBLE);
-                mPhotoView.animaTo(mInfo, new Runnable() {
+                mPvBg.animaTo(mInfo, new Runnable() {
                     @Override
                     public void run() {
-                        mParent.setVisibility(GONE);
+                        mLlayoutParent.setVisibility(GONE);
 
                     }
                 });
@@ -142,14 +150,16 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
     @Override
     public void initData() {
 
-        ArrayList<MeterBean> beanList = new ArrayList<MeterBean>();
+        taskPresenter1.readDbToBean(statisticsObserver, MyApplication.getCurrentMeteringSection());
+
+        ArrayList<MeterBean1> beanList = new ArrayList<MeterBean1>();
         List<AssetNumberBean> assetNumberBeanList = new ArrayList<AssetNumberBean>();
 
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
 
         if(type.equals(Constant.all)){
-            beanList = (ArrayList<MeterBean>) MyApplication.getMeterBeanList();
+            beanList = (ArrayList<MeterBean1>) MyApplication.getMeterBean1List();
             mListView.setVisibility(View.VISIBLE);
             mAssetsNumberListView.setVisibility(View.GONE);
 
@@ -157,35 +167,35 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
             mListView.setAdapter(unFinishedAdapter);
 
         }else if(type.equals(Constant.finish)){
-            for(MeterBean bean : MyApplication.getMeterBeanList()){
+            for(MeterBean1 bean : MyApplication.getMeterBean1List()){
                 if(bean.isFinish()){
                     beanList.add(bean);
+                    LogUtils.i("bean--isFinish" + bean.toString());
                 }
             }
             mListView.setVisibility(View.VISIBLE);
             mAssetsNumberListView.setVisibility(View.GONE);
 
-            FinishedAdapter finishedAdapter = new FinishedAdapter(this, beanList,
-                    mParent,
-                    mBg,
-                    mPhotoView,
-                    mInfo,
-                    in,
-                    out,
-                    new FinishedAdapter.PhotoViewInfo(){
-
+            mFinishedAdapter = new FinishedAdapter(this, beanList, mCollectorNumberBeanList,
+                    new FinishedAdapter.FinishPhotoListener() {
                         @Override
-                        public void whenOnClickSetPhotoViewInfo(Info info) {
+                        public void onPreView(int index, String path, Info info) {
                             mInfo = info;
+
+                            mBitmap = ImageFactory.getBitmap(path);
+                            mPvBg.setImageBitmap(mBitmap);
+                            mIvBg.startAnimation(in);             // 执行动画
+                            mIvBg.setVisibility(View.VISIBLE);
+                            mLlayoutParent.setVisibility(View.VISIBLE);
+                            mPvBg.animaFrom(mInfo);
+
                             setTitleIsShow(View.GONE);
                         }
-                    }){
-
-            };
-            mListView.setAdapter(finishedAdapter);
+                    });
+            mListView.setAdapter(mFinishedAdapter);
 
         }else if(type.equals(Constant.unfinished)){
-            for(MeterBean bean : MyApplication.getMeterBeanList()){
+            for(MeterBean1 bean : MyApplication.getMeterBean1List()){
                 if(!bean.isFinish()){
                     beanList.add(bean);
                 }
@@ -195,6 +205,64 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
 
             UnFinishedAdapter unFinishedAdapter = new UnFinishedAdapter(this, beanList);
             mListView.setAdapter(unFinishedAdapter);
+
+        }else if(type.equals(Constant.replaceMeter)){                           // 换表
+
+            for(MeterBean1 bean : MyApplication.getMeterBean1List()){
+                if(bean.isFinish()){
+                    if(bean.getRelaceOrAnd().equals("0"))
+                        beanList.add(bean);
+                }
+            }
+            mListView.setVisibility(View.VISIBLE);
+            mAssetsNumberListView.setVisibility(View.GONE);
+
+            mFinishedAdapter = new FinishedAdapter(this, beanList, mCollectorNumberBeanList,
+                    new FinishedAdapter.FinishPhotoListener() {
+                        @Override
+                        public void onPreView(int index, String path, Info info) {
+                            mInfo = info;
+
+                            mBitmap = ImageFactory.getBitmap(path);
+                            mPvBg.setImageBitmap(mBitmap);
+                            mIvBg.startAnimation(in);             // 执行动画
+                            mIvBg.setVisibility(View.VISIBLE);
+                            mLlayoutParent.setVisibility(View.VISIBLE);
+                            mPvBg.animaFrom(mInfo);
+
+                            setTitleIsShow(View.GONE);
+                        }
+                    });
+            mListView.setAdapter(mFinishedAdapter);
+
+        }else if(type.equals(Constant.newCollector)){                           // 加采集器
+
+            for(MeterBean1 bean : MyApplication.getMeterBean1List()){
+                if(bean.isFinish()){
+                    if(bean.getRelaceOrAnd().equals("1"))
+                        beanList.add(bean);
+                }
+            }
+            mListView.setVisibility(View.VISIBLE);
+            mAssetsNumberListView.setVisibility(View.GONE);
+
+            mFinishedAdapter = new FinishedAdapter(this, beanList, mCollectorNumberBeanList,
+                    new FinishedAdapter.FinishPhotoListener() {
+                        @Override
+                        public void onPreView(int index, String path, Info info) {
+                            mInfo = info;
+
+                            mBitmap = ImageFactory.getBitmap(path);
+                            mPvBg.setImageBitmap(mBitmap);
+                            mIvBg.startAnimation(in);             // 执行动画
+                            mIvBg.setVisibility(View.VISIBLE);
+                            mLlayoutParent.setVisibility(View.VISIBLE);
+                            mPvBg.animaFrom(mInfo);
+
+                            setTitleIsShow(View.GONE);
+                        }
+                    });
+            mListView.setAdapter(mFinishedAdapter);
 
         }else if(type.equals(Constant.assetsNumber_Mismatches)){
 
@@ -231,12 +299,12 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
 
 
             case R.id.img:                                          // 点击"放大后的预览图片的控件"，缩小、隐藏那个预览布局
-                mBg.startAnimation(out);
+                mIvBg.startAnimation(out);
                 setTitleIsShow(View.VISIBLE);
-                mPhotoView.animaTo(mInfo, new Runnable() {
+                mPvBg.animaTo(mInfo, new Runnable() {
                     @Override
                     public void run() {
-                        mParent.setVisibility(View.GONE);
+                        mLlayoutParent.setVisibility(View.GONE);
 
                     }
                 });
@@ -250,7 +318,7 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
     Observer statisticsObserver = new Observer<List<AssetNumberBean>>() {
 
         @Override
-        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+        public void onSubscribe(@NonNull Disposable d) {
 
         }
 
@@ -263,13 +331,49 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
         }
 
         @Override
-        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+        public void onError(@NonNull Throwable e) {
             closeDialog();
         }
 
         @Override
         public void onComplete() {
+            taskPresenter1.getCollectorList(getCollctorListObserver, MyApplication.getCurrentMeteringSection());
+            //closeDialog();
+        }
+    };
+
+    /**
+     * 获取采集器列表
+     *
+     * rxjava -- 主线程
+     */
+    Observer getCollctorListObserver = new Observer<List<CollectorNumberBean>>() {
+
+        @Override
+        public void onSubscribe(@NonNull Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(@NonNull List<CollectorNumberBean> collectorNumberBeen) {
+            mCollectorNumberBeanList = (ArrayList<CollectorNumberBean>) collectorNumberBeen;
+
+            if(mFinishedAdapter!=null){
+                mFinishedAdapter.setCollectorNumberBeanList(mCollectorNumberBeanList);
+            }
+        }
+
+        @Override
+        public void onError(@NonNull Throwable e) {
+            LogUtils.i("getCollctorObserver e.getMessage()" + e.getMessage());
             closeDialog();
+        }
+
+
+        @Override
+        public void onComplete() {
+
+            //closeDialog();
         }
     };
 
@@ -278,13 +382,13 @@ public class StatisticsDetailsActivity extends BaseActivity implements View.OnCl
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {                 // 如果点击的是"返回按钮"
 
-            if(mParent.getVisibility() == View.VISIBLE && mBg.getVisibility() == View.VISIBLE){   // 缩小、隐藏那个预览布局
-                mBg.startAnimation(out);
+            if(mLlayoutParent.getVisibility() == View.VISIBLE && mIvBg.getVisibility() == View.VISIBLE){   // 缩小、隐藏那个预览布局
+                mIvBg.startAnimation(out);
                 setTitleIsShow(View.VISIBLE);
-                mPhotoView.animaTo(mInfo, new Runnable() {
+                mPvBg.animaTo(mInfo, new Runnable() {
                     @Override
                     public void run() {
-                        mParent.setVisibility(View.GONE);
+                        mLlayoutParent.setVisibility(View.GONE);
 
                     }
                 });

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zh.metermanagement.R;
 import com.zh.metermanagement.bean.MeterBean;
+import com.zh.metermanagement.bean.MeterBean1;
 
 import java.util.ArrayList;
 
@@ -17,10 +18,10 @@ import java.util.ArrayList;
  */
 public class UnFinishedAdapter extends BaseAdapter {
 
-    private ArrayList<MeterBean> mBeanArrayList = new ArrayList<>();
+    private ArrayList<MeterBean1> mBeanArrayList = new ArrayList<>();
     private Context mContext;
 
-    public UnFinishedAdapter(Context context, ArrayList<MeterBean> meterBeanList){
+    public UnFinishedAdapter(Context context, ArrayList<MeterBean1> meterBeanList){
 
         mContext = context;
         mBeanArrayList = meterBeanList;
@@ -57,7 +58,7 @@ public class UnFinishedAdapter extends BaseAdapter {
             viewHold = (ViewHold) convertView.getTag();
         }
 
-        viewHold.tvSequenceNumber.setText(mBeanArrayList.get(position).getSequenceNumber());
+        //viewHold.tvSequenceNumber.setText(mBeanArrayList.get(position).getSequenceNumber());
         viewHold.tvUserNumber.setText(mBeanArrayList.get(position).getUserNumber());
         viewHold.tvUserName.setText(mBeanArrayList.get(position).getUserName());
         viewHold.tvUserAddr.setText(mBeanArrayList.get(position).getUserAddr());
@@ -69,7 +70,7 @@ public class UnFinishedAdapter extends BaseAdapter {
 
     class ViewHold{
 
-        public TextView tvSequenceNumber;
+        //public TextView tvSequenceNumber;
         public TextView tvUserNumber;
         public TextView tvUserName;
         public TextView tvUserAddr;
@@ -78,7 +79,7 @@ public class UnFinishedAdapter extends BaseAdapter {
 
         public ViewHold(View view) {
 
-            tvSequenceNumber = (TextView) view.findViewById(R.id.tv_sequenceNumber);
+            //tvSequenceNumber = (TextView) view.findViewById(R.id.tv_sequenceNumber);
             tvUserNumber = (TextView) view.findViewById(R.id.tv_userNumber);
             tvUserName = (TextView) view.findViewById(R.id.tv_userName);
             tvUserAddr = (TextView) view.findViewById(R.id.tv_userAddr);

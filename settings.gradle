@@ -1,3 +1,4 @@
-include ':app', ':sweetdialog', ':PhotoView'
+include ':app', ':sweetdialog', ':PhotoView', ':PasswordDialog'
 project(':sweetdialog').projectDir = new File('libraries/sweetdialog')
 project(':PhotoView').projectDir = new File('libraries/PhotoView')
+project(':PasswordDialog').projectDir = new File('libraries/PasswordDialog')

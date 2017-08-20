@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:padding="20dp">
+
+
+    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+        android:id="@+id/actv_recipients"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_et_g"
+        android:text=""
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:hint="请输入收件人"
+        />
+    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+        android:layout_marginTop="10dp"
+        android:id="@+id/actv_subject"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_et_g"
+        android:text=""
+        android:maxLines="2"
+        android:minLines="2"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:hint="请输入主题"
+        />
+
+    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+        android:layout_marginTop="10dp"
+        android:id="@+id/actv_text"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_et_g"
+        android:text=""
+        android:maxLines="4"
+        android:minLines="4"
+        android:textSize="18dp"
+        android:textColor="@color/black"
+        android:hint="请输入内容"
+        />
+    <Button
+        android:layout_marginTop="60dp"
+        android:id="@+id/btn_sendEamil"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="发送邮件"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:background="@drawable/btn_bg_blue_white"
+        />
+
+</LinearLayout>

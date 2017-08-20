@@ -6,6 +6,7 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,12 +22,14 @@ import com.shen.sweetdialog.SweetAlertDialog;
 import com.zh.metermanagement.R;
 import com.zh.metermanagement.application.MyApplication;
 import com.zh.metermanagement.trasks.TaskPresenterImpl;
+import com.zh.metermanagement.trasks.TaskPresenterImpl1;
+import com.zh.metermanagement.utils.BeepManager;
 
 
 import java.util.List;
 
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
 	/************************ 标题控件 ***************************/
 	/** 标题 */
@@ -46,6 +49,7 @@ public abstract class BaseActivity extends Activity {
 	private SweetAlertDialog mSweetAlertDialog = null;
 	private Context context;
 	public TaskPresenterImpl taskPresenter;
+	public TaskPresenterImpl1 taskPresenter1;
 
 	/** 将 布局填充成 "控件"， 将控件加载到"界面"中 */
 	public abstract int getContentLayout();
@@ -57,6 +61,7 @@ public abstract class BaseActivity extends Activity {
 	public abstract void initListener();
 	public abstract void initData();
 
+	public BeepManager mBeepManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public abstract class BaseActivity extends Activity {
 		MyApplication.listActivity.add(this);
 		context = this;
 		taskPresenter = new TaskPresenterImpl(this);
+		taskPresenter1 = new TaskPresenterImpl1(this);
 
 		initTitleView();
 		initTitleListener(mTvBaseTitle, mBtnBaseBack, mBtnBaseMenu);
@@ -78,6 +84,8 @@ public abstract class BaseActivity extends Activity {
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 		contentV.setLayoutParams(params);
 		mLayoutContainer.addView(contentV);
+
+		mBeepManager = new BeepManager(this,true,false);
 
 		initView();
 		initListener();

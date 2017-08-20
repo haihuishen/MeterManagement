@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="12dp"
-            android:text="已换表:"
+            android:text="已完成:"
             android:textColor="@color/black"
             android:gravity="center"/>
 
@@ -150,7 +150,7 @@
             android:layout_weight="1"
             android:textSize="12dp"
             android:gravity="center"
-            android:text="未换表:"
+            android:text="未完成:"
             android:textColor="@color/black"/>
 
         <TextView
@@ -166,6 +166,92 @@
         <TextView
             android:layout_marginLeft="5dp"
             android:id="@+id/tv_unfinished"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="查看"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:textColor="@drawable/btn_text_color_blue_w"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text="换表:"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_replaceMeterCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_replaceMeter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="查看"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:textColor="@drawable/btn_text_color_blue_w"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
+    <LinearLayout
+        android:layout_marginTop="3dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text="加装采集器:"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_newCollectorCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_newCollector"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -238,7 +324,7 @@
             android:layout_weight="1"
             android:textSize="12dp"
             android:gravity="center"
-            android:text="旧表地址和编码不匹配:"
+            android:text="旧表地址和编码\n不匹配:"
             android:textColor="@color/black"/>
 
         <TextView
@@ -282,7 +368,7 @@
             android:layout_weight="1"
             android:textSize="12dp"
             android:gravity="center"
-            android:text="新表地址和编码不匹配:"
+            android:text="新表地址和编码\n不匹配:"
             android:textColor="@color/black"/>
 
         <TextView

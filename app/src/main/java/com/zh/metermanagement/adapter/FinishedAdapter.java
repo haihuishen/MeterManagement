@@ -2,22 +2,32 @@ package com.zh.metermanagement.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.zh.metermanagement.R;
+import com.zh.metermanagement.application.MyApplication;
+import com.zh.metermanagement.bean.CollectorNumberBean;
 import com.zh.metermanagement.bean.MeterBean;
+import com.zh.metermanagement.bean.MeterBean1;
 import com.zh.metermanagement.config.Constant;
 import com.zh.metermanagement.utils.ImageFactory;
+import com.zh.metermanagement.utils.LogUtils;
+import com.zh.metermanagement.utils.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.View.VISIBLE;
 
@@ -26,38 +36,21 @@ import static android.view.View.VISIBLE;
  */
 public class FinishedAdapter extends BaseAdapter {
 
-    private ArrayList<MeterBean> mBeanArrayList = new ArrayList<>();
+    private ArrayList<MeterBean1> mBeanArrayList = new ArrayList<>();
     private Context mContext;
 
-    View mParent;
-    View mBg;
-    PhotoView mPhotoView;
-    Info mInfo;
+    FinishPhotoListener mFinishPhotoListener;
 
-    AlphaAnimation mIn;
-    AlphaAnimation mOut;
+    private ArrayList<CollectorNumberBean> mCollectorNumberBean = new ArrayList<>();
 
-    PhotoViewInfo mPhotoViewInfo;
-
-    public FinishedAdapter(Context context, ArrayList<MeterBean> meterBeanList,
-                           View parent,
-                           View bg,
-                           PhotoView photoView,
-                           Info info,
-                           AlphaAnimation in,
-                           AlphaAnimation out,
-                           PhotoViewInfo photoViewInfo){
+    public FinishedAdapter(Context context, ArrayList<MeterBean1> meterBeanList,
+                           ArrayList<CollectorNumberBean> collectorNumberBean,
+                           FinishPhotoListener finishPhotoListener){
 
         mContext = context;
         mBeanArrayList = meterBeanList;
-
-        mParent = parent;
-        mBg = bg;
-        mPhotoView = photoView;
-        mInfo = info;
-        mIn = in;
-        mOut = out;
-        mPhotoViewInfo = photoViewInfo;
+        mCollectorNumberBean = collectorNumberBean;
+        mFinishPhotoListener = finishPhotoListener;
     }
 
     @Override
@@ -91,7 +84,7 @@ public class FinishedAdapter extends BaseAdapter {
             viewHold = (ViewHold) convertView.getTag();
         }
 
-        viewHold.tvSequenceNumber.setText(mBeanArrayList.get(position).getSequenceNumber());
+        //viewHold.tvSequenceNumber.setText(mBeanArrayList.get(position).getSequenceNumber());
         viewHold.tvUserNumber.setText(mBeanArrayList.get(position).getUserNumber());
         viewHold.tvUserName.setText(mBeanArrayList.get(position).getUserName());
         viewHold.tvUserAddr.setText(mBeanArrayList.get(position).getUserAddr());
@@ -103,37 +96,108 @@ public class FinishedAdapter extends BaseAdapter {
         viewHold.tvNewAddr.setText(mBeanArrayList.get(position).getNewAddr());
         viewHold.tvNewElectricity.setText(mBeanArrayList.get(position).getNewElectricity());
 
-        File file = new File(Constant.IMAGE_PATH + mBeanArrayList.get(position).getPicPath());
-        final Bitmap bitmap;
-        if(file.exists())
-            viewHold.pvItemImage.setImageBitmap(bitmap = ImageFactory.getBitmap(Constant.IMAGE_PATH + mBeanArrayList.get(position).getPicPath()));
-        else
-            viewHold.pvItemImage.setImageBitmap(bitmap = ImageFactory.getBitmap(Constant.CACHE_IMAGE_PATH + "no_preview_picture.png"));
+
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);         // 水平
 
 
+        String path = "";
+        String collectorPath = "";
+        if(mBeanArrayList.get(position).getRelaceOrAnd() !=null &&
+                mBeanArrayList.get(position).getRelaceOrAnd().equals("0")) {
+            viewHold.tvNewCollector.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(mBeanArrayList.get(position).getPicPath())) {
+                path = mBeanArrayList.get(position).getPicPath();
 
-        viewHold.pvItemImage.setOnClickListener(new View.OnClickListener() {
+            }
+            viewHold.rvPicCollector.setVisibility(View.GONE);
+            viewHold.lLayoutPicCollector.setVisibility(View.GONE);
+
+        }else {
+            viewHold.lLayoutPicCollector.setVisibility(View.VISIBLE);
+            viewHold.rvPicCollector.setVisibility(View.VISIBLE);
+            viewHold.tvNewCollector.setVisibility(View.VISIBLE);
+            viewHold.tvNewCollector.setText(mBeanArrayList.get(position).getCollectorAssetNumbersScan());
+
+            if (!TextUtils.isEmpty(mBeanArrayList.get(position).getMeterPicPath())) {
+                path = mBeanArrayList.get(position).getMeterPicPath();
+            }
+
+            for(CollectorNumberBean bean : mCollectorNumberBean){
+                LogUtils.i("mBeanArrayList.get(position).getCollectorAssetNumbersScan()" +
+                        mBeanArrayList.get(position).getCollectorAssetNumbersScan() +
+                "\nbean.getCollectorNumbers()" + bean.getCollectorNumbers());
+                if(mBeanArrayList.get(position).getCollectorAssetNumbersScan().equals(bean.getCollectorNumbers())){
+                    collectorPath = bean.getCollectorPicPath();
+                    if(!TextUtils.isEmpty(collectorPath)) {
+                        viewHold.rvPicCollector.setLayoutManager(manager);
+                        PicAdapter collectorPicAdapter = new PicAdapter(mContext, new ArrayList<String>(), new PicAdapter.PicListener() {
+                            @Override
+                            public void onDelete(int index, String path) {
+
+                            }
+
+                            @Override
+                            public void onPreView(int index, String path, Info info) {
+
+                                mFinishPhotoListener.onPreView(index, path, info);
+
+                            }
+                        });
+
+                        viewHold.rvPicCollector.setAdapter(collectorPicAdapter);
+                        collectorPicAdapter.setDeleteIcon(true);
+                        collectorPicAdapter.setPathList(collectorPath);
+                    }else {
+                        viewHold.rvPicCollector.setVisibility(View.GONE);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        LinearLayoutManager manager1 = new LinearLayoutManager(mContext);
+        manager1.setOrientation(LinearLayoutManager.HORIZONTAL);         // 水平
+        viewHold.rvPic.setLayoutManager(manager1);
+
+        PicAdapter picAdapter = new PicAdapter(mContext, new ArrayList<String>(), new PicAdapter.PicListener() {
             @Override
-            public void onClick(View view) {
-                mInfo =  viewHold.pvItemImage.getInfo();
-                mPhotoViewInfo.whenOnClickSetPhotoViewInfo(mInfo);
-                mPhotoView.setImageBitmap(bitmap);
-                mBg.startAnimation(mIn);
-                mBg.setVisibility(VISIBLE);
-                mParent.setVisibility(VISIBLE);
-                mPhotoView.animaFrom(mInfo);
+            public void onDelete(int index, String path) {
 
+            }
+
+            @Override
+            public void onPreView(int index, String path, Info info) {
+
+                mFinishPhotoListener.onPreView(index, path, info);
 
             }
         });
+
+        viewHold.rvPic.setAdapter(picAdapter);
+        picAdapter.setDeleteIcon(true);
+        picAdapter.setPathList(path);
+
+
+
+
         return convertView;
     }
 
+    public void setCollectorNumberBeanList(ArrayList<CollectorNumberBean> beanList){
+        if(mCollectorNumberBean == null)
+            mCollectorNumberBean = new ArrayList<>();
+
+        mCollectorNumberBean.clear();
+        mCollectorNumberBean.addAll(beanList);
+        notifyDataSetChanged();
+    }
 
     class ViewHold{
 
-        /** 序号 */
-        public TextView tvSequenceNumber;
+        ///** 序号 */
+        //public TextView tvSequenceNumber;
         /** 用户编号 */
         public TextView tvUserNumber;
         /** 用户名称 */
@@ -152,13 +216,22 @@ public class FinishedAdapter extends BaseAdapter {
         public TextView tvNewAddr;
         /** 新表止码 */
         public TextView tvNewElectricity;
-        /** 图片 */
-        public PhotoView pvItemImage;
+        /** 加装的采集器 */
+        public TextView tvNewCollector;
+
+//        /** 图片 */
+//        public PhotoView pvItemImage;
+        /** 图片列表 -- 电表的 */
+        public RecyclerView rvPic;
+        /** 图片列表 -- 采集器的 -- 包裹的布局 */
+        public LinearLayout lLayoutPicCollector;
+        /** 图片列表 -- 采集器的 */
+        public RecyclerView rvPicCollector;
 
 
         public ViewHold(View view) {
 
-            tvSequenceNumber = (TextView) view.findViewById(R.id.tv_sequenceNumber);
+            //tvSequenceNumber = (TextView) view.findViewById(R.id.tv_sequenceNumber);
             tvUserNumber = (TextView) view.findViewById(R.id.tv_userNumber);
             tvUserName = (TextView) view.findViewById(R.id.tv_userName);
             tvUserAddr = (TextView) view.findViewById(R.id.tv_userAddr);
@@ -168,13 +241,17 @@ public class FinishedAdapter extends BaseAdapter {
             tvNewAssetNumbersScan = (TextView) view.findViewById(R.id.tv_newAssetNumbersScan);
             tvNewAddr = (TextView) view.findViewById(R.id.tv_newAddr);
             tvNewElectricity = (TextView) view.findViewById(R.id.tv_newElectricity);
-            pvItemImage = (PhotoView) view.findViewById(R.id.pv_item_image);
+            tvNewCollector = (TextView) view.findViewById(R.id.tv_newCollector);
+            //pvItemImage = (PhotoView) view.findViewById(R.id.pv_item_image);
+            rvPic = (RecyclerView) view.findViewById(R.id.rv_pic);
+            lLayoutPicCollector = (LinearLayout) view.findViewById(R.id.lLayout_newCollector);
+            rvPicCollector = (RecyclerView) view.findViewById(R.id.rv_pic_newCollector);
         }
 
 
     }
 
-    public interface PhotoViewInfo{
-        void whenOnClickSetPhotoViewInfo(Info info);
+    public interface FinishPhotoListener{
+        void onPreView(int index, String path, Info info);
     }
 }

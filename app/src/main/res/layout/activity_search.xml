@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        />
+
+    <!--tabIndicatorColor 指示器的颜色
+    tabIndicatorHeight  指示器的高度
+    tabBackground  整个tab标签的背景颜色   会覆盖"指示器的颜色"
+    tabMode => scrollable 可以滚动 fixed 固定的
+    tabSelectedTextColor  被选中的tab 标签字体颜色
+    tabTextColor  默认的标签颜色
+    -->
+    <!--<item name="tabMaxWidth">@dimen/tab_max_width</item>-->
+    <!--<item name="tabIndicatorColor">?attr/colorAccent</item>-->
+    <!--<item name="tabIndicatorHeight">0dp</item>-->
+    <!--<item name="tabPaddingStart">12dp</item>-->
+    <!--<item name="tabPaddingEnd">12dp</item>-->
+    <!--<item name="tabBackground">@color/tab_bgcolor</item>-->
+    <!--<item name="tabSelectedTextColor">?android:textColorPrimary</item>-->
+
+    <!--android:background="@color/blue_title_bg"-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="2dp"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/black"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+
+
+</LinearLayout>
